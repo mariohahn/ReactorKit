@@ -30,6 +30,7 @@ You may want to see the [Examples](#examples) section first if you'd like to see
     * [Global States](#global-states)
     * [View Communication](#view-communication)
     * [Testing](#testing)
+    * [Scheduling](#scheduling)
 * [Examples](#examples)
 * [Dependencies](#dependencies)
 * [Requirements](#requirements)
@@ -342,6 +343,22 @@ func testIsLoading() {
 }
 ```
 
+### Scheduling
+
+Define `scheduler` property to specify which scheduler is used for reducing and observing the state stream. Note that this queue **must be** a serial queue. The default scheduler is `CurrentThreadScheduler`.
+
+```swift
+final class MyReactor: Reactor {
+  let scheduler: Scheduler = SerialDispatchQueueScheduler(qos: .default)
+
+  func reduce(state: State, mutation: Mutation) -> State {
+    // executed in a background thread
+    heavyAndImportantCalculation()
+    return state
+  }
+}
+```
+
 ## Examples
 
 * [Counter](https://github.com/ReactorKit/ReactorKit/tree/master/Examples/Counter): The most simple and basic example of ReactorKit
@@ -431,6 +448,7 @@ Any discussions and pull requests are welcomed 💖
   <br><br>
   <a href="https://hyperconnect.com/"><img align="center" height="62" alt="Hyperconnect" hspace="15" src="https://user-images.githubusercontent.com/931655/50819891-aa89d200-136e-11e9-8b19-780e64e54b2a.png"></a>
   <a href="https://toss.im/career/?category=engineering&positionId=7"><img align="center" height="28" alt="Toss" hspace="15" src="https://user-images.githubusercontent.com/931655/65512318-ede39b00-df13-11e9-874c-f1e478bda6c8.png"></a>
+  <a href="https://pay.line.me"><img align="center" height="58" alt="LINE Pay" hspace="15" src="https://user-images.githubusercontent.com/68603/68569839-7efdd980-04a2-11ea-8d7e-673831b1b658.png"></a>
   <br><br>
 </p>
 
